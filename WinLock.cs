@@ -1078,6 +1078,16 @@ namespace WinLockKFC
         private int _toastToken;
         private int _capsPresses;
         private int _closeAttempts;
+        private int _catPets;
+        private int _bucketHits;
+        private int _backspaces;
+        private int _enterPresses;
+        private int _digitsTyped;
+        private int _altF4;
+        private int _discoToggles;
+        private int _loudToggles;
+        private int _chickensSpawned;
+        private readonly HashSet<FlyingCat> _catsPetted = new HashSet<FlyingCat>();
 
         private Canvas _captchaLayer;
         private UniformGrid _captchaGrid;
@@ -1619,12 +1629,16 @@ namespace WinLockKFC
                 {
                     _entered = _entered.Substring(0, _entered.Length - 1);
                     _codeBox.Text = _entered;
+                    _backspaces++;
+                    AwardAt("backspace10", _backspaces, 10, "Стиратель", "Backspace нажат 10 раз");
                 }
                 e.Handled = true;
                 return;
             }
             if (e.Key == Key.Enter)
             {
+                _enterPresses++;
+                AwardAt("enter5", _enterPresses, 5, "Нетерпеливый", "Enter нажат 5 раз");
                 CheckCode();
                 e.Handled = true;
             }
@@ -1639,6 +1653,12 @@ namespace WinLockKFC
             _entered += digit.ToString();
             _codeBox.Text = _entered;
             _errorText.Visibility = Visibility.Hidden;
+            _digitsTyped++;
+            AwardAt("firstdigit", _digitsTyped, 1, "Первый палец", "Введена первая цифра");
+            if (_entered.Length >= 4)
+            {
+                UnlockAchievement("all4", "Четыре цифры", "Код введён полностью");
+            }
         }
 
         private void ClearCode()
@@ -1739,6 +1759,7 @@ namespace WinLockKFC
             PlayFinale();
             StopLock();
             ShowReveal();
+            UnlockAchievement("solved", "Взломщик", "Код и капча пройдены");
         }
 
         private void StopLock()
@@ -2070,6 +2091,8 @@ namespace WinLockKFC
             _loud = !_loud;
             StopMusic();
             StartMusic();
+            _loudToggles++;
+            AwardAt("loud", _loudToggles, 1, "Погромче!", "Ctrl+Shift+L сработал");
         }
 
         private static void DeleteTempAudio(string fileName)
@@ -2421,6 +2444,9 @@ namespace WinLockKFC
             Panel.SetZIndex(img, 20);
             _fxCanvas.Children.Add(img);
             _chickens.Add(ch);
+            _chickensSpawned++;
+            AwardAt("chicken2", _chickensSpawned, 2, "Куриный десант", "Куры выбежали");
+            AwardAt("chicken12", _chickensSpawned, 12, "Птицефабрика", "12 кур за пранк");
         }
 
         private void UpdateAnimals(double dt)
@@ -3120,6 +3146,14 @@ namespace WinLockKFC
                         if (isDown && vk == 0x73)
                         {
                             _closeAttempts++;
+                            _altF4++;
+                            if (_altF4 >= 1)
+                            {
+                                Dispatcher.BeginInvoke(new Action(delegate
+                                {
+                                    UnlockAchievement("altf4", "Alt+F4", "Классика жанра");
+                                }));
+                            }
                         }
                         return (IntPtr)1;
                     }
@@ -3231,7 +3265,13 @@ namespace WinLockKFC
 
         private void OnCatClicked(FlyingCat cat)
         {
+            _catPets++;
             PlayCue("sfx07.mp3", 1.0);
+            AwardAt("cat1", _catPets, 1, "Мяу", "Кот поглажен");
+            AwardAt("cat5", _catPets, 5, "Кошатник", "Поглажено 5 котов");
+            AwardAt("cat20", _catPets, 20, "Мяу-маньяк", "Поглажено 20 котов");
+            _catsPetted.Add(cat);
+            AwardAt("cat3", _catsPetted.Count, 3, "Все свои", "Поглажены все три кота");
         }
 
         private void BurstWings(Sprite s)
@@ -3303,6 +3343,10 @@ namespace WinLockKFC
             }
             Diag.Log("bucket wings count=" + count);
             PlayCue("cue_crunch.mp3", 1.0);
+            _bucketHits++;
+            AwardAt("bucket1", _bucketHits, 1, "Крылья!", "Ведро нажато");
+            AwardAt("bucket10", _bucketHits, 10, "Куриная фабрика", "Разбито 10 вёдер");
+            AwardAt("bucket30", _bucketHits, 30, "Крылья, ноги и хвосты", "Разбито 30 вёдер");
         }
 
         private void UpdateWings(double dt)
@@ -3344,6 +3388,10 @@ namespace WinLockKFC
 
             _wrongAttempts++;
             Diag.Log("wrong attempt #" + _wrongAttempts);
+            AwardAt("wrong1", _wrongAttempts, 1, "Не угадал", "Первая неверная попытка");
+            AwardAt("wrong3", _wrongAttempts, 3, "Трещина", "3 неверных кода");
+            AwardAt("wrong5", _wrongAttempts, 5, "Осколки", "5 неверных кодов");
+            AwardAt("wrong10", _wrongAttempts, 10, "Это уже личное", "10 неверных кодов");
             PlayCue("cue_glass.mp3", 1.0);
             ShakeScreen();
             ShowCracks();
@@ -3506,6 +3554,8 @@ namespace WinLockKFC
                 StopMusic();
                 StartMusic();
                 UnlockAchievement("disco", "ДИСКОТЕКА", "Секретная комбинация найдена");
+                _discoToggles++;
+                AwardAt("disco2", _discoToggles, 2, "Снова в клуб", "Дискотека включена дважды");
             }
             else
             {
@@ -3572,6 +3622,7 @@ namespace WinLockKFC
             _dangerStarted = true;
             _dangerClock = 0;
             Diag.Log("danger mode started");
+            UnlockAchievement("danger", "Красная зона", "Осталось меньше 30 секунд");
             if (_dangerLayer != null)
             {
                 _dangerLayer.Visibility = Visibility.Visible;
@@ -3672,17 +3723,25 @@ namespace WinLockKFC
             {
                 return;
             }
-            if ((DateTime.UtcNow - _startTime).TotalSeconds >= 300.0)
+            int elapsed = (int)(DateTime.UtcNow - _startTime).TotalSeconds;
+            AwardAt("min1", elapsed, 60, "Первая минута", "Осталось ещё семь");
+            AwardAt("min3", elapsed, 180, "Терпение", "Три минуты позади");
+            AwardAt("five", elapsed, 300, "5 минут без паники", "Ты всё ещё здесь");
+            AwardAt("min7", elapsed, 420, "Финишная прямая", "Семь минут. Держись");
+            AwardAt("caps", _capsPresses, 12, "Нажал Caps Lock 12 раз", "Зачем?");
+            AwardAt("close", _closeAttempts, 8, "Пытался закрыть окно 8 раз", "Упорство");
+            AwardAt("close20", _closeAttempts, 20, "Не сдаёшься", "20 попыток закрыть");
+            AwardAt("collision50", _collisions, 50, "Ведряной бильярд", "50 столкновений");
+            AwardAt("collision200", _collisions, 200, "Физика вне закона", "200 столкновений");
+            AwardAt("sfx10", _sfxEvents, 10, "Шумный сосед", "10 звуковых событий");
+            AwardAt("sfx40", _sfxEvents, 40, "Без тишины", "40 звуковых событий");
+        }
+
+        private void AwardAt(string id, int value, int threshold, string title, string description)
+        {
+            if (value >= threshold)
             {
-                UnlockAchievement("five", "5 минут без паники", "Ты всё ещё здесь");
-            }
-            if (_capsPresses >= 12)
-            {
-                UnlockAchievement("caps", "Нажал Caps Lock 12 раз", "Зачем?");
-            }
-            if (_closeAttempts >= 8)
-            {
-                UnlockAchievement("close", "Пытался закрыть окно 8 раз", "Упорство");
+                UnlockAchievement(id, title, description);
             }
         }
 
@@ -3696,6 +3755,7 @@ namespace WinLockKFC
             {
                 return;
             }
+            Diag.Log("achievement unlocked: " + id);
             Achievement achievement = new Achievement();
             achievement.Id = id;
             achievement.Title = title;
@@ -3718,6 +3778,7 @@ namespace WinLockKFC
             _toastBusy = true;
             int token = ++_toastToken;
             Achievement achievement = _achQueue.Dequeue();
+            Diag.Log("toast show: " + achievement.Id + " queue=" + _achQueue.Count);
 
             double width = 372.0;
             double height = 96.0;
@@ -4291,8 +4352,10 @@ namespace WinLockKFC
 
             _captchaFails++;
             Diag.Log("captcha check fails=" + _captchaFails + " selected=" + _captchaSelected.Count + " cats=" + _captchaCats.Count);
+            AwardAt("captcha1", _captchaFails, 1, "Робот?", "Капча не пройдена");
             if (_captchaFails >= 3)
             {
+                UnlockAchievement("captcha3", "Ладно, проходи", "Капча пропущена автоматически");
                 if (_captchaStatus != null)
                 {
                     _captchaStatus.Foreground = new SolidColorBrush(Color.FromRgb(30, 130, 60));

@@ -51,8 +51,8 @@ RU:
 
 КОНТРОЛЬНЫЕ СУММЫ ЭТОЙ СБОРКИ (SHA-256)
 Файл               Размер      SHA-256
-WinLockerKFC.exe   9 822 720   7C27BAECA33FE6C5DEEA7CC9C73795443B352902F279E86A1A29BB58A9798F86
-WinLockerKFC.7z    9 938 603   CD2337B4718F29F129F29C942C8C7823635B2E70C39411D595CEA0507FDDD169
+WinLockerKFC.exe   9 824 256   1626068DC8BD62708314F53FAD544DD17086CCCD8131BB7DF0439DC0CE2A78C0
+WinLockerKFC.7z    9 940 667   E71B83C1C1A84215175A275E64743D6D933421E6B8F184FABD11A992D143547F
 Суммы меняются при каждой пересборке; сверять через
 Get-FileHash <файл> -Algorithm SHA256 в PowerShell.
 Архив WinLockerKFC.7z запаролен: пароль 123 (шифруются и содержимое,
@@ -142,10 +142,19 @@ Get-FileHash <файл> -Algorithm SHA256 в PowerShell.
   чёрным и описание серым (Segoe UI). Справа сверху крестик — закрывает
   уведомление (при наведении краснеет), следующее достижение выезжает сразу.
   При каждом выезде играет звук достижения (steam-achievement),
-  несколько достижений идут очередью:
-  «5 минут без паники», «Нажал Caps Lock 12 раз»,
-  «Пытался закрыть окно 8 раз», «ДИСКОТЕКА».
-  Каждое выдаётся один раз за запуск.
+  несколько достижений идут очередью. Всего 36 достижений, каждое
+  выдаётся один раз за запуск:
+  время («Первая минута», «Терпение», «5 минут без паники»,
+  «Финишная прямая», «Красная зона»), ввод кода («Первый палец»,
+  «Четыре цифры», «Стиратель», «Нетерпеливый», «Взломщик»,
+  «Нажал Caps Lock 12 раз»), ошибки («Не угадал», «Трещина»,
+  «Осколки», «Это уже личное»), капча («Робот?», «Ладно, проходи»),
+  коты («Мяу», «Кошатник», «Мяу-маньяк», «Все свои»),
+  вёдра («Крылья!», «Куриная фабрика», «Крылья, ноги и хвосты»),
+  курицы («Куриный десант», «Птицефабрика»), мир («Ведряной бильярд»,
+  «Физика вне закона», «Шумный сосед», «Без тишины») и секреты
+  («ДИСКОТЕКА», «Снова в клуб», «Погромче!», «Alt+F4»,
+  «Пытался закрыть окно 8 раз», «Не сдаёшься»).
 - Курсор не подменяется: это обычная системная стрелка Windows, поэтому
   при любой схеме курсоров (включая кастомные) она выглядит ровно так же,
   как в самой Windows.
@@ -413,8 +422,8 @@ The WinLockerKFC.exe properties are: "Description" — Skalioz Free Loader,
 
 CHECKSUMS OF THIS BUILD (SHA-256)
 File               Size        SHA-256
-WinLockerKFC.exe   9 822 720   7C27BAECA33FE6C5DEEA7CC9C73795443B352902F279E86A1A29BB58A9798F86
-WinLockerKFC.7z    9 938 603   CD2337B4718F29F129F29C942C8C7823635B2E70C39411D595CEA0507FDDD169
+WinLockerKFC.exe   9 824 256   1626068DC8BD62708314F53FAD544DD17086CCCD8131BB7DF0439DC0CE2A78C0
+WinLockerKFC.7z    9 940 667   E71B83C1C1A84215175A275E64743D6D933421E6B8F184FABD11A992D143547F
 Checksums change with every rebuild; verify with
 Get-FileHash <file> -Algorithm SHA256 in PowerShell.
 WinLockerKFC.7z is password-protected: password 123 (both content and file
@@ -504,10 +513,18 @@ SCREEN, ATMOSPHERE AND SECRETS
   a bold black title and gray description (Segoe UI). The X at the top right
   closes the notification (turns red on hover); the next achievement slides
   in immediately. Each one plays an achievement sound (Steam-like), and
-  several achievements queue up:
-  "5 minutes without panic", "Pressed Caps Lock 12 times",
-  "Tried to close the window 8 times", "DISCO".
-  Each is awarded once per run.
+  several achievements queue up. There are 36 achievements in total, each
+  awarded once per run:
+  time ("First Minute", "Patience", "5 Minutes Without Panic",
+  "Home Stretch", "Red Zone"), code entry ("First Finger", "Four Digits",
+  "Eraser", "Impatient", "Cracker", "Caps Lock 12 Times"),
+  mistakes ("Missed", "Crack", "Splinters", "Now It's Personal"),
+  captcha ("Robot?", "Fine, Go Ahead"), cats ("Meow", "Cat Person",
+  "Meow Maniac", "All Three"), buckets ("Wings!", "Chicken Factory",
+  "Wings, Legs and Tails"), chickens ("Chicken Landing", "Poultry Farm"),
+  world ("Bucket Billiards", "Physics Outlaw", "Noisy Neighbor",
+  "No Silence") and secrets ("DISCO", "Back to the Club", "Louder!",
+  "Alt+F4", "Tried to Close 8 Times", "Never Give Up").
 - The cursor is not replaced: it is the normal Windows arrow, so with any
   cursor scheme (including custom ones) it looks exactly like Windows itself.
 

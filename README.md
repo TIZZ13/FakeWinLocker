@@ -42,7 +42,8 @@
   крылышек и хрустит корочка. Курицы — просто декорация.
 - Неверный код: звук стекла, тряска экрана и «трещины».
 - Последние 30 секунд: красная пульсация и сердцебиение.
-- Достижения в виде уведомлений Windows 7 и фейковая капча Aero
+- Достижения в виде уведомлений Windows 7 (36 штук: время, ввод кода,
+  ошибки, капча, коты, вёдра, куры, секреты) и фейковая капча Aero
   с британскими вислоухими котами.
 - Секретный disco-режим: нажать **K**, затем **F**, затем **C**.
 - Финал: «ШУТКА! Это был пранк. Ничего не удалено. С тебя ведро крылышек
@@ -147,8 +148,9 @@ no encryption, no file deletion, no data theft, no autostart.
   crust crunches. Chickens are decoration only.
 - Wrong password: glass sound, screen shake and cracks.
 - Last 30 seconds: red pulsing overlay and heartbeat.
-- Windows 7 style achievement toasts and a fake Aero captcha with
-  British lop-eared cats.
+- Windows 7 style achievement toasts (36 of them: time, code entry,
+  mistakes, captcha, cats, buckets, chickens, secrets) and a fake Aero
+  captcha with British lop-eared cats.
 - Secret disco mode: press **K**, **F**, **C**.
 - Finale: "JOKE! It was a prank. Nothing was deleted. You owe me a bucket
   of KFC wings!" with fanfare and a rooster.
