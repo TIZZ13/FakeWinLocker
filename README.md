@@ -14,6 +14,16 @@
 > (`shutdown /r /f`), поэтому несохранённые документы будут закрыты.
 > Запускай только на своём ПК или на ПК друга, который дал согласие.
 
+## Скриншоты / Screenshots
+
+**Обычный экран / Lock screen**
+
+![WinLockerKFC lock screen](docs/screenshots/lockscreen.png)
+
+**Disco-режим (K → F → C) / Disco mode**
+
+![WinLockerKFC disco mode](docs/screenshots/disco.png)
+
 ## RU
 
 ### Что это
