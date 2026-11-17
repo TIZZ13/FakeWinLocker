@@ -1,0 +1,16 @@
+* text=auto
+
+*.cs        text
+*.ps1       text
+*.md        text
+*.txt       text
+*.rc        text
+*.manifest  text
+*.gitignore text
+*.gitattributes text
+
+*.png   binary
+*.ico   binary
+*.mp3   binary
+*.exe   binary
+*.7z    binary

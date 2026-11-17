@@ -1,0 +1,27 @@
+# Build artifacts
+*.exe
+*.res
+payload.gz
+WUDFHost.exe
+
+# Local test output
+preview.png
+policy_status.txt
+*.log
+
+# Distribution archives (published as GitHub Releases)
+*.7z
+*.zip
+*.rar
+
+# Third-party music (not distributed in this repository)
+music.mp3
+music_loud.mp3
+
+# IDE / OS junk
+.vs/
+.vscode/
+bin/
+obj/
+Thumbs.db
+desktop.ini
