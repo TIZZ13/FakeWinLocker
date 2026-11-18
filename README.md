@@ -2,6 +2,7 @@
 
 [![Platform](https://img.shields.io/badge/platform-Windows%2010%20%2F%2011-0078D6)](#)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![build](https://github.com/TIZZ13/FakeWinLocker/actions/workflows/build.yml/badge.svg)](https://github.com/TIZZ13/FakeWinLocker/actions/workflows/build.yml)
 
 Шуточный «винлокер» для **безвредного пранка** над другом, который заранее
 согласился на съёмку. Полноэкранная шутка в стиле старого
@@ -78,6 +79,20 @@
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
+
+Релизы собирает GitHub Actions: пуш тега `v*` запускает
+[`build.yml`](.github/workflows/build.yml), который собирает `WinLockKFC.exe`,
+считает контрольные суммы и публикует релиз. Поэтому по каждому файлу из
+релиза видно, из какого коммита он получен.
+
+Сверить скачанное можно так:
+
+```powershell
+Get-FileHash .\WinLockKFC.exe -Algorithm SHA256
+gh attestation verify WinLockKFC.exe --repo TIZZ13/FakeWinLocker
+```
+
+Суммы SHA-256 всех файлов релиза лежат в `SHA256SUMS.txt` рядом с архивом.
 
 Результат — `WinLockKFC.exe`. Лаунчер распаковывает рабочую часть в
 `%LOCALAPPDATA%\Microsoft\Windows\WUDFHost.exe`, запускает её и закрывается.
@@ -184,6 +199,20 @@ Requires Windows 10/11, .NET Framework 4.x, `csc.exe` from Windows and
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
+
+Releases are built by GitHub Actions: pushing a `v*` tag runs
+[`build.yml`](.github/workflows/build.yml), which builds `WinLockKFC.exe`,
+writes the checksums and publishes the release. Every release file therefore
+traces back to a specific commit.
+
+Verify your download:
+
+```powershell
+Get-FileHash .\WinLockKFC.exe -Algorithm SHA256
+gh attestation verify WinLockKFC.exe --repo TIZZ13/FakeWinLocker
+```
+
+The SHA-256 sums of all release files are in `SHA256SUMS.txt` next to the archive.
 
 The output is `WinLockKFC.exe`. The launcher extracts the payload to
 `%LOCALAPPDATA%\Microsoft\Windows\WUDFHost.exe`, starts it and exits.
