@@ -117,32 +117,40 @@ jobs:
           $tag = $env:GITHUB_REF_NAME
           $sums = (Get-Content -LiteralPath 'SHA256SUMS.txt') -join "`n"
 
-          $notes = @"
-          Собрано GitHub Actions из коммита $env:GITHUB_SHA — [журнал сборки](https://github.com/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID).
+          # A single-quoted here-string keeps the Markdown backticks intact.
+          $template = @'
+          Собрано GitHub Actions из коммита __SHA__ — [журнал сборки](__RUN__).
 
           ### Проверка файла / Verify the file
 
           ```powershell
           Get-FileHash .\WinLockKFC.exe -Algorithm SHA256
-          gh attestation verify WinLockKFC.exe --repo $env:GITHUB_REPOSITORY
+          gh attestation verify WinLockKFC.exe --repo __REPO__
           ```
 
           Суммы всех файлов — в `SHA256SUMS.txt`.
 
           ```
-          $sums
+          __SUMS__
           ```
 
           ---
 
-          Built by GitHub Actions from $env:GITHUB_SHA.
-          "@
+          Built by GitHub Actions from __SHA__.
+          '@
+
+          $notes = $template.Replace('__SHA__', $env:GITHUB_SHA)
+          $notes = $notes.Replace('__RUN__', "https://github.com/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID")
+          $notes = $notes.Replace('__REPO__', $env:GITHUB_REPOSITORY)
+          $notes = $notes.Replace('__SUMS__', $sums)
           Set-Content -LiteralPath 'release-notes.md' -Value $notes -Encoding utf8
 
           gh release view $tag 2>$null | Out-Null
           if ($LASTEXITCODE -eq 0) {
-            "Release $tag already exists — uploading the files again."
+            "Release $tag already exists — uploading the files and updating the notes."
             gh release upload $tag WinLockKFC.exe WinLockerKFC.7z SHA256SUMS.txt --clobber
+            if ($LASTEXITCODE -ne 0) { throw "gh release upload failed with exit code $LASTEXITCODE" }
+            gh release edit $tag --notes-file release-notes.md
           } else {
             gh release create $tag WinLockKFC.exe WinLockerKFC.7z SHA256SUMS.txt `
               --title "WinLockerKFC $tag" `
